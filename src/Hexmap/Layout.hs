@@ -10,6 +10,7 @@ module Hexmap.Layout
   ) where
 
 import           Control.Lens
+import           Data.Maybe               (fromJust)
 import           Linear                   hiding (project, rotate)
 import           Linear.Affine
 
@@ -40,7 +41,8 @@ applyLayout :: Layout -> V2 Double -> V2 Double
 applyLayout layout v2 = toTransformationMatrix layout !* v2
 
 unapplyLayout :: Layout -> V2 Double -> V2 Double
-unapplyLayout layout v2 = inv22 (toTransformationMatrix layout) !* v2
+unapplyLayout layout v2 = inv22' (toTransformationMatrix layout) !* v2
+  where inv22' = fromJust . inv22
 
 toTransformationMatrix :: Layout -> M22 Double
 toTransformationMatrix l = rotate l !*! scale l !*! project l
