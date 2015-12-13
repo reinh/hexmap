@@ -13,6 +13,6 @@ class Conversion a b where
 
 instance Integral a => Conversion (Offset a) (Axial a) where
   conversion = iso toAxial toOffset
-  where
+    where
       toAxial (Offset (V2 c r)) = Axial (V2 (c - (r `div` 2)) r)
       toOffset (Axial (V2 c r)) = Offset (V2 (c + (r `div` 2)) r)
